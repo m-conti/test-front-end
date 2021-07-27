@@ -34,6 +34,11 @@ const checkFunctions = {
   username: checkFieldUsername
 };
 
+const defaultFieldError = {
+  username: false,
+  name: false,
+};
+
 @Options({
   props: {
     visible: Boolean,
@@ -52,10 +57,7 @@ export default class UserForm extends Vue {
 
   actionProcessing = false;
   error = null;
-  fieldError = {
-    username: false,
-    name: false,
-  };
+  fieldError = { ...defaultFieldError };
 
   async sendData(): Promise<void> {
     if (this.actionProcessing || !this.checkFormValidity()) return;
@@ -72,8 +74,16 @@ export default class UserForm extends Vue {
 
     this.actionProcessing = false;
 
+    this.clearValues();
+
     if (user)
       this.onAddUser(user);
+  }
+
+  clearValues(): void {
+    this.fieldError = { ...defaultFieldError };
+    this.$refs.nameInput.value = "";
+    this.$refs.usernameInput.value = "";
   }
 
   onUpdateField(field: 'name'|'username', value: string): void {
