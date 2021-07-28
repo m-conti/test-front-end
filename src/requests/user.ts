@@ -18,7 +18,7 @@ export const postUser = (data: IUserForm): Promise<IUser> => new Promise(
   );
 
 export const deleteUser = (id: number): Promise<boolean> => new Promise(
-  (res, rej) => axios.delete(`${POST_USER}/${id}`)
+  (res, rej) => axios.delete(`${USERS}/${id}`)
   .then(() => res(true))
   .catch(rej)
 );
